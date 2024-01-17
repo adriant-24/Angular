@@ -1,0 +1,9 @@
+<aside class="menu-sidebar d-none d-lg-block">
+  <div class="logo">
+    <a routerLink="/products">
+      <img src="assets/images/logTiplaDreptunghi.JPG" alt="AmyShop" class="img-responsive">
+    </a>
+  </div>
+  <app-product-category-list *ngIf="!showUserSideBar()"></app-product-category-list>
+  <app-user-sidebar *ngIf="showUserSideBar()"></app-user-sidebar>
+</aside>

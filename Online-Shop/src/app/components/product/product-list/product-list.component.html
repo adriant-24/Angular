@@ -1,0 +1,82 @@
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <h4>
+      {{currentSearchDescription}}
+    </h4>
+    <hr>
+    <div class="container-fluid">
+      <div class="row">
+        <div *ngFor="let product of products" class="col-md-3">
+          <div class="product-box">
+            <a routerLink="/product/{{product.productId}}">
+              <img src="{{product.imageUrl}}" class="img-responsive">
+            </a>
+            <a routerLink="/product/{{product.productId}}">
+              <h1>{{product.name}} </h1>
+            </a>
+            <h2>{{product.description}}</h2>
+            <div class="price">{{product.unitPrice | currency:'USD':'symbol':'1.0-2'}}</div>
+            <button (click)="addToCart(product)" class="btn btn-primary btn-sm">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+        <div *ngIf="searchMode && products?.length == 0" class="alert alert-warning com-md-12" role="alert">
+          <h6>No  products found for your search input</h6>
+        </div>
+      </div>
+      <div class="footer-pagination">
+        <div class="row">
+          <div class="col-md-5 justify-content-start">
+            <span>Page {{pageNumber}} of {{totalPages}}</span>
+          </div>
+          <div class="col-md-7 ">
+            <div class="row">
+              <div class=" col-md-9 d-flex justify-content-end">
+                <ngb-pagination size="sm"
+                                [collectionSize]="totalElements"
+                                [(page)]="pageNumber"
+                                [pageSize]="pageSize"
+                                [maxSize]="4"
+                                [rotate]="true"
+                                [boundaryLinks]="true"
+                                (pageChange)="fetchProducts()">
+
+                </ngb-pagination>
+              </div>
+              <div class="col-md-3" style="text-align:right">
+                <span class="mr-2">Page size  </span>
+                <select #mySizeSelect (change)="updatePageSize(mySizeSelect.value)">
+                  <option selected="true">10</option>
+                  <option>20</option>
+                  <option>30</option>
+                  <option>40</option>
+                </select>
+              </div>
+
+            </div>
+            <!--<div class="col-md-3">
+            <div class="items">
+              <label>Item per page</label> <select>
+                <option>10</option>
+                <option>20</option>
+                <option>30</option>
+                <option>40</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="number">1 - 10 of 100</div>
+          </div>
+          <div class="col-md-1">
+            <div class="arrows">
+              <a href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+              <a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            </div>
+          </div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>

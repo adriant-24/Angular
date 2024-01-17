@@ -1,0 +1,56 @@
+<div class="main-content page-m">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <div class="container h-100 d-flex justify-content-center align-items-center ">
+        <div id="loginbox" class="col-md-6 col-md-offset-2 col-sm-6 col-sm-offset-2">
+          <div class="card border-info">
+            <div class="card-header bg-info">
+              Sign In
+            </div>
+
+            <div class="card-body">
+              <div class="card-text">
+
+                <!-- Login Form -->
+                <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()" class="form-horizontal">
+
+                  <!-- User name -->
+                  <div style="margin-bottom: 25px;" class="input-group">
+                    <input [class.is-invalid]="email.invalid && email.touched" formControlName="email" type="text" placeholder="Email" class="form-control" />
+                    <div *ngIf="(email.invalid && email.touched) || email.dirty">
+                      <small *ngIf="email.errors?.['required']" class="text-danger">Email is required</small>
+                      <!--<small *ngIf="email.errors?.['pattern']" class="text-danger">Please provide a valid email address</small>-->
+                    </div>
+                  </div>
+
+                  <!-- Password -->
+                  <div style="margin-bottom: 25px;" class="input-group">
+                    <input type="password" formControlName="password" placeholder="Password" class="form-control" />
+                    <div *ngIf="(password.invalid && password.touched) || password.dirty">
+                      <small *ngIf="password.errors?.['required'] || password.errors?.['notOnlyWhitespace']" class="text-danger">Password is required</small>
+                      <small *ngIf="password.errors?.['minlength']" class="text-danger">Password min length is 6</small>
+                    </div>
+                  </div>
+
+                  <!-- Login/Submit Button -->
+                  <div style="margin-top: 10px;" class="form-group">
+                    <div class="col-sm-6 controls">
+                      <button type="submit" class="btn btn-success">Login</button>
+                    </div>
+                  </div>
+
+                </form>
+                <!--<div>
+                  <a th:href="@{/register/registrationForm}" method="GET"
+                     class="btn btn-primary mt-3"
+                     role="button"
+                     aria-pressed="true">Register New User</a>
+                </div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

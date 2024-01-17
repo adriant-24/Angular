@@ -1,0 +1,29 @@
+<div class="cart-area d-n">
+  <div class="row">
+    <div class="col-md-3 align-self-center">
+      <a *ngIf="user.authStatus != 'AUTH'" (click)="login()" class="btn btn-outline-light btn-sm">Log In</a>
+    </div>
+    <div class="col-md-8">
+      <app-cart-status></app-cart-status>
+     </div>
+      <div class="col-md-1">
+        <div class="dropdown">
+          <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-user-circle fa-5x" aria-hidden="true"></i>
+          </a>
+
+          <ul class="dropdown-menu gap-1 p-2 rounded-3 mx-0 shadow w-220px" data-bs-theme="light">
+            <li *ngIf="user.authStatus == 'AUTH'"><a class="dropdown-item rounded-2" routerLink="/user/userInfo">User Info</a></li>
+            <li *ngIf="user.authStatus == 'AUTH'"><a class="dropdown-item rounded-2" routerLink="/user/userAddresses">Addresses</a></li>
+            <li *ngIf="user.authStatus == 'AUTH'"><a class="dropdown-item rounded-2" routerLink="/user/userOrders">Orders</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li *ngIf="user.authStatus == 'AUTH'"><a class="dropdown-item rounded-2" (click)="logout()">Log out</a></li>
+          </ul>
+        </div>
+        <!--<a routerLink="/user/userInfo">
+        <i class="fa fa-user-circle fa-5x" aria-hidden="true"></i>
+      </a>-->
+      </div>
+    </div>
+  </div>
+

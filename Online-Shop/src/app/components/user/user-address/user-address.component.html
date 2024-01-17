@@ -1,0 +1,20 @@
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <div *ngFor="let address of userAddresses" class="row align-items-md-stretch">
+        <div class="col-md-9">
+          <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+            <p>Country: {{address.country}}</p>
+            <p>City: {{address.city}}</p>
+            <p>County: {{address.county}}</p>
+            <p>Street: {{address.streetAndNumber}}</p>
+            <p>Additional address: {{address.additionalAddress}}</p>
+            <p>Zip Code: {{address.zipCode}}</p>
+            <p>Primary: {{address.isPrimary}}</p>
+            <button class="btn btn-outline-secondary" type="button">Modify</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
