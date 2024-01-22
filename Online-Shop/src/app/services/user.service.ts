@@ -46,9 +46,16 @@ export class UserService {
        });
   }
 
-  getUserOrders(page: number,
+  getUserOrders(
+                page: number,
                 size: number): Observable<GetPaginatedResponse | null> {
-    const params = this.httpParamsPagination(page, size);
+    let params = this.httpParamsPagination(page, size);
+
+    if (window.sessionStorage.getItem("userdetails")) {
+      const user = JSON.parse(window.sessionStorage.getItem("userdetails")!);
+      params = params.append("userName", user.userInfo.email);
+    }
+    
 
     return this.httpClient.get<GetPaginatedResponse>
       (`${environment.rootUrl}${AppConstants.ORDERS_API_URL}`,
