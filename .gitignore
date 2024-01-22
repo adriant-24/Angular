@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Angular/FileContentIndex/399c807e-87b5-49dd-b4ba-7c6107eebab3.vsidx
+/.vs/Angular/v17/.wsuo
+/.vs/slnx.sqlite
+/.vs/Angular/FileContentIndex/f58238b4-be7e-4e0f-b02a-d94b3abd16e9.vsidx
+/.vs/VSWorkspaceState.json
+*.vsidx
