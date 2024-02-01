@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http'
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { Product } from '../common/product';
 import { ProductCategory } from '../common/product-category';
-import { Observable} from 'rxjs';
-import { map} from 'rxjs/operators';
+import { Observable, throwError} from 'rxjs';
+import { catchError, map} from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn:'root'
@@ -11,14 +12,14 @@ import { map} from 'rxjs/operators';
 
 export class ProductService{
 
-  private baseUrl = 'http://localhost:8080/api';
-  private baseCategoryUrl = 'http://localhost:8080/api/categories';
+ // private baseUrl = 'http://localhost:8080/api';
+  //private baseCategoryUrl = 'http://localhost:8080/api/categories';
   constructor(private httpClient: HttpClient){}
 
   getProductList(page: number,
                  size: number): Observable<GetPaginatedResponse> {
     const params = this.httpParams(page, size);
-    return this.httpClient.get<GetPaginatedResponse>(`${this.baseUrl}/products`, { params });
+    return this.httpClient.get<GetPaginatedResponse>(`${environment.rootUrl}/products`, { params });
       //.pipe(map(response => response));
 
   }
@@ -26,7 +27,7 @@ export class ProductService{
 
   getProductListByCategory(categoryId: number): Observable<Product[]>{
 
-    const searchUrl: string = `${this.baseUrl}/products/category?id=${categoryId}`;
+    const searchUrl: string = `${environment.rootUrl}/products/category?id=${categoryId}`;
     return this.httpClient.get<Product[]>(searchUrl)
       .pipe(map(response => response));
 
@@ -36,13 +37,17 @@ export class ProductService{
                                     size: number,
                                     categoryId: number): Observable<GetPaginatedResponse> {
     const params = this.httpParams(page, size);
-    const searchUrl: string = `${this.baseUrl}/products/category?id=${categoryId}`;
-    return this.httpClient.get<GetPaginatedResponse>(searchUrl, { params });
+    const searchUrl: string = `${environment.rootUrl}/products/category?id=${categoryId}`;
+    return this.httpClient.get<GetPaginatedResponse>(searchUrl, { params })
+      .pipe(map(response => response));
+     // .pipe(catchError(this.errorHandler));
 
   }
-
+  errorHandler(error: HttpErrorResponse) {
+    return throwError(() => new Error(error.message || "server error."));
+  }
   getProductCategoryList(): Observable<ProductCategory[]> {
-    return this.httpClient.get<ProductCategory[]>(this.baseCategoryUrl).
+    return this.httpClient.get<ProductCategory[]>(`${environment.rootUrl}/categories`).
       pipe(map(response => response));
 
   }
@@ -51,12 +56,12 @@ export class ProductService{
                           size: number,
                           keyword: string): Observable<GetPaginatedResponse> {
     const params = this.httpParams(page, size);
-    const searchUrl: string = `${this.baseUrl}/products/search?keyword=${keyword}`;
+    const searchUrl: string = `${environment.rootUrl}/products/search?keyword=${keyword}`;
     return this.httpClient.get<GetPaginatedResponse>(searchUrl, { params });
   }
 
   getProductById(productId: number) {
-    const searchUrl: string = `${this.baseUrl}/product?id=${productId}`;
+    const searchUrl: string = `${environment.rootUrl}/product?id=${productId}`;
     return this.httpClient.get<Product>(searchUrl).
       pipe(map(response => response));
   }

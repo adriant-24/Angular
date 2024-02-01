@@ -158,7 +158,7 @@ export class CheckoutComponent implements OnInit{
     order.payType = 'Credit Card';
     order.isPaid = true;
     order.status = "Placed";
-    order.userId = this.user.userId;
+    order.userId = 1;//cd this.user.userId;
 
     //order items
     let orderItems: OrderItem[] = this.cartService.cartItems
