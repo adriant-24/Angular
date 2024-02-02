@@ -25,8 +25,8 @@ export class UserInfoComponent implements OnInit{
     //this.userService.user$.subscribe(
     //  data => this.userInfo = data.userInfo
     //);
-    if (this.localStorage.getItem('userdetails')) {
-      this.userInfo = JSON.parse(this.localStorage.getItem('userdetails')!).userInfo;
+    if (window.sessionStorage.getItem('userdetails')) {
+      this.userInfo = JSON.parse(window.sessionStorage.getItem('userdetails')!).userInfo;
     }
   }
 

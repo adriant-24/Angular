@@ -250,6 +250,10 @@ export class CheckoutComponent implements OnInit{
 
   patchUserAddressInfo() {
     
+    this.userService.userAddresses$.subscribe(data => {
+      this.user.addresses = data;
+    });
+
     if (this.user.addresses.length == 0)
       return;
 
@@ -397,13 +401,22 @@ export class CheckoutComponent implements OnInit{
 
 
 
-  copyShippingContactInfoToBillingContactInfo(checked?:boolean) {
+  copyShippingContactInfoToBillingContactInfo(checked?: boolean) {
 
-    if (checked)
-      this.checkoutFormGroup.controls['billingContactInfo']
-        .setValue(this.checkoutFormGroup.controls['shippingContactInfo'].value);
+    if (checked) {
+      let shippingGroup = this.checkoutFormGroup.controls["shipping"];
+      if (shippingGroup) { 
+        this.checkoutFormGroup.controls["billing"].get("billingContactInfo")!
+          .setValue(shippingGroup.get("shippingContactInfo")!.value);
+        this.checkoutFormGroup.controls["billing"].get("billingAddress")!
+          .setValue(shippingGroup.get("shippingAddress")!.value);
+      }
+
+    //this.checkoutFormGroup.controls['billingContactInfo']
+    //  .setValue(this.checkoutFormGroup.controls['shippingContactInfo'].value);
+    }
     else
-      this.checkoutFormGroup.controls['billingContactInfo'].reset();
+      this.checkoutFormGroup.controls['billing'].reset();
 
   }
 

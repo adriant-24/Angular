@@ -12,8 +12,6 @@ import { environment } from '../../environments/environment';
 
 export class ProductService{
 
- // private baseUrl = 'http://localhost:8080/api';
-  //private baseCategoryUrl = 'http://localhost:8080/api/categories';
   constructor(private httpClient: HttpClient){}
 
   getProductList(page: number,

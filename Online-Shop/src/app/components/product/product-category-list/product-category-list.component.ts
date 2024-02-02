@@ -3,8 +3,8 @@ import { RouterLink } from '@angular/router';
 import { RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductCategory } from '../../../common/product-category';
-import { ProductCategoryService } from '../../../services/product-category.service';
 import { LocalstorageService } from '../../../storage/local-storage';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-product-category-list',
@@ -17,7 +17,7 @@ export class ProductCategoryListComponent {
 
   productCategories: ProductCategory[] = [];
 
-  constructor(private productCategoryService: ProductCategoryService,
+  constructor(private productService: ProductService,
     private localStorage: LocalstorageService
     /*, private route: ActivatedRoute*/) { }
 
@@ -32,7 +32,7 @@ export class ProductCategoryListComponent {
   }
 
   listOfCategories() {
-    this.productCategoryService
+    this.productService
       .getProductCategoryList()
       .subscribe(data =>
         {

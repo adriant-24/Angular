@@ -3,6 +3,7 @@ import { LocalstorageService } from '../../../storage/local-storage';
 import { User } from '../../../common/user';
 import { Address } from '../../../common/address';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-user-address',
@@ -13,11 +14,15 @@ import { CommonModule } from '@angular/common';
 })
 export class UserAddressComponent implements OnInit{
   userAddresses: Address[] = [];
-  constructor(private localStorage: LocalstorageService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    if (this.localStorage.getItem('userdetails')) {
-      this.userAddresses = JSON.parse(this.localStorage.getItem('userdetails')!).addresses;
-    }
+    //if (this.localStorage.getItem('userdetails')) {
+    //  this.userAddresses = JSON.parse(this.localStorage.getItem('userdetails')!).addresses;
+    //}
+    this.userService.userAddresses$
+      .subscribe(response =>
+        this.userAddresses = response
+      );
   }
 }

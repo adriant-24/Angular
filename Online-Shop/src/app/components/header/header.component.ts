@@ -9,6 +9,7 @@ import { User } from '../../common/user';
 import { KeycloakProfile } from 'keycloak-js';
 import { CartStatusComponent } from '../cart/cart-status/cart-status.component';
 import { KeycloakService } from 'keycloak-angular';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class HeaderComponent {
   user = new User();
   constructor(private route: ActivatedRoute,
     private localStorage: LocalstorageService,
-    private keycloakService: KeycloakService) { }
+    private keycloakService: KeycloakService,
+    private userService: UserService) { }
 
   public async ngOnInit() {
     this.isLoggedIn = await this.keycloakService.isLoggedIn();
@@ -33,15 +35,10 @@ export class HeaderComponent {
     if (this.isLoggedIn) {
       this.userProfile = await this.keycloakService.loadUserProfile();
      // this.user.userId = this.userProfile.id;
-      if (this.userProfile) { 
-        this.user.userName = this.userProfile.username || '';
-        this.user.userInfo.firstName = this.userProfile.firstName || '';
-        this.user.userInfo.lastName = this.userProfile.lastName || '';
-        this.user.userInfo.email = this.userProfile.email || '';
-      }
-
-      this.user.authStatus = 'AUTH';
-      window.sessionStorage.setItem('userdetails', JSON.stringify(this.user));
+      if (this.userProfile) {
+        this.user = this.userService.setUserDetails(this.userProfile);
+        this.userService.getUserAddresses();
+      }   
     }
   }
 
@@ -52,5 +49,6 @@ export class HeaderComponent {
   public logout() {
     let redirectUrl:string = "http://localhost:4200/products";
     this.keycloakService.logout(redirectUrl);
+    window.sessionStorage.setItem('userdetails', '');
   }
 }
